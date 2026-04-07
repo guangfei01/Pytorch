@@ -22,7 +22,7 @@ def train_step(model: torch.nn.Module,
         optimizer.step()
 
         y_pred_class = torch.argmax(torch.softmax(y_pred, dim=1), dim=1)
-        train_acc += (y_pred_class==y).sum().item() #/ len(y_pred) no divide by batch size because we will divide by the total number of samples at the end
+        train_acc += (y_pred_class==y).sum().item() / len(y_pred_class) #no divide by batch size because we will divide by the total number of samples at the end
     
     train_loss /= len(dataloader)
     train_acc /= len(dataloader)
@@ -44,7 +44,7 @@ def test_step(model: torch.nn.Module,
             loss = loss_fn(y_pred, y)
             test_loss += loss.item()
             y_pred_class = torch.argmax(torch.softmax(y_pred, dim=1), dim=1)
-            test_acc += (y_pred_class==y).sum().item()
+            test_acc += (y_pred_class==y).sum().item()/len(y_pred_class)
 
     test_loss /= len(dataloader)
     test_acc /= len(dataloader)
